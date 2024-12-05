@@ -25,7 +25,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.foodorderappcompose.R
+import com.example.foodorderappcompose.datastore.AppDatastore
 import com.example.foodorderappcompose.ui.theme.CardView1
 import com.example.foodorderappcompose.ui.theme.CardView2
 import com.example.foodorderappcompose.ui.theme.CardView3
@@ -48,6 +52,10 @@ import com.example.foodorderappcompose.ui.theme.CardView8
 import com.example.foodorderappcompose.ui.theme.CardView9
 import com.example.foodorderappcompose.ui.theme.MainColor
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,18 +63,7 @@ fun HomePage(navController: NavController) {
 
     val homeViewModel: HomeViewModel = viewModel()
     val foodList = homeViewModel.foodList.observeAsState(listOf())
-
-    val colorList = listOf(
-        CardView1,
-        CardView2,
-        CardView3,
-        CardView4,
-        CardView5,
-        CardView6,
-        CardView7,
-        CardView8,
-        CardView9
-    )
+    val colorList = listOf(CardView1, CardView2, CardView3, CardView4, CardView5, CardView6, CardView7, CardView8, CardView9)
 
     Scaffold(
         topBar = {

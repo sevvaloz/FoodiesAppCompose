@@ -46,7 +46,7 @@ fun Navigator() {
         ) {
             val json = it.arguments?.getString("FOOD")
             val food = Gson().fromJson(json, Food::class.java)
-            DetailPage(navController = navController, food)
+            DetailPage(food)
         }
     }
 }
