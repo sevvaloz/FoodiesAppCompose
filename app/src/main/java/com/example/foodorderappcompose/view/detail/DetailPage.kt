@@ -1,4 +1,4 @@
-package com.example.foodorderappcompose.view
+package com.example.foodorderappcompose.view.detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -37,6 +37,7 @@ import androidx.navigation.NavController
 import com.example.foodorderappcompose.R
 import com.example.foodorderappcompose.data.Food
 import com.example.foodorderappcompose.ui.theme.MainColor
+import com.example.foodorderappcompose.view.home.getDrawableResId
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -66,6 +67,8 @@ fun DetailPage(navController: NavController, food: Food) {
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) { snackbarData ->
             Snackbar(
                 modifier = Modifier.padding(16.dp),
+                containerColor = MainColor,
+                contentColor = Color.White,
                 action = {
                     IconButton(onClick = { snackbarData.dismiss() }) {
                         Icon(
@@ -106,6 +109,7 @@ fun DetailPage(navController: NavController, food: Food) {
                     scope.launch {
                         snackbarHostState.showSnackbar(
                             message = "${food.name} siparişiniz alındı",
+                            actionLabel = null, //you can use this if you just want to show string action instead of icon (and delete action method of snackbarHost)
                             duration = SnackbarDuration.Short
                         )
                         navController.popBackStack()

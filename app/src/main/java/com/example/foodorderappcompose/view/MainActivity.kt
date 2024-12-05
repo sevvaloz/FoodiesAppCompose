@@ -16,6 +16,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.foodorderappcompose.data.Food
 import com.example.foodorderappcompose.ui.theme.FoodOrderAppComposeTheme
+import com.example.foodorderappcompose.view.detail.DetailPage
+import com.example.foodorderappcompose.view.home.HomePage
 import com.google.gson.Gson
 
 class MainActivity : ComponentActivity() {

@@ -1,6 +1,5 @@
-package com.example.foodorderappcompose.view
+package com.example.foodorderappcompose.view.home
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,9 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,9 +34,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.foodorderappcompose.R
-import com.example.foodorderappcompose.data.Food
 import com.example.foodorderappcompose.ui.theme.CardView1
 import com.example.foodorderappcompose.ui.theme.CardView2
 import com.example.foodorderappcompose.ui.theme.CardView3
@@ -56,7 +53,8 @@ import com.google.gson.Gson
 @Composable
 fun HomePage(navController: NavController) {
 
-    val foodList = remember { mutableStateListOf<Food>() }
+    val homeViewModel: HomeViewModel = viewModel()
+    val foodList = homeViewModel.foodList.observeAsState(listOf())
 
     val colorList = listOf(
         CardView1,
@@ -69,23 +67,6 @@ fun HomePage(navController: NavController) {
         CardView8,
         CardView9
     )
-
-    LaunchedEffect(key1 = Unit) {
-
-        Log.d("TAG","LaunchedEffect")
-
-        val food1 = Food(1, "Köfte", "kofte", 150.75f)
-        val food2 = Food(2, "Pizza", "pizza", 250.00f)
-        val food3 = Food(3, "Pide", "pide", 200.95f)
-        val food4 = Food(4, "Lahmacun", "lahmacun", 120.25f)
-        val food5 = Food(5, "Hamburger", "hamburger", 300.45f)
-        val food6 = Food(6, "Sarma", "sarma", 180.00f)
-        val food7 = Food(7, "Mantı", "manti", 220.65f)
-        val food8 = Food(8, "Çorba", "corba", 90.15f)
-        val food9 = Food(10, "Salata", "salata", 110.50f)
-
-        foodList.addAll(listOf(food1, food2, food3, food4, food5, food6, food7, food8, food9))
-    }
 
     Scaffold(
         topBar = {
@@ -111,7 +92,7 @@ fun HomePage(navController: NavController) {
             .padding(paddingValues)
         ) {
             LazyColumn {
-                itemsIndexed(foodList) { index, food ->
+                itemsIndexed(foodList.value) { index, food ->
                     ElevatedCard(
                         elevation = CardDefaults.cardElevation(
                             defaultElevation = 3.dp
