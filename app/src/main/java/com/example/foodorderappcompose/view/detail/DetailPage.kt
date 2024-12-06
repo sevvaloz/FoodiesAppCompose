@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -76,19 +75,7 @@ fun DetailPage(food: Food) {
                         modifier = Modifier.fillMaxWidth(),
                         contentAlignment = Alignment.Center
                     ) {
-                        Column(
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(text = food.name, fontSize = 25.sp, color = Color.White)
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Center
-                            ) {
-                                Icon(painterResource(id = R.drawable.restaurant), contentDescription = null)
-                                Text(text = "${selectedFoodOrderCount.intValue} kez sipariş edildi", fontSize = 20.sp, color = Color.White)
-                            }
-                        }
+                        Text(text = food.name, fontSize = 25.sp, color = Color.White)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -97,27 +84,29 @@ fun DetailPage(food: Food) {
                 )
             )
         },
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) { snackbarData ->
-            Snackbar(
-                modifier = Modifier.padding(16.dp),
-                containerColor = MainColor,
-                contentColor = Color.White,
-                action = {
-                    IconButton(onClick = { snackbarData.dismiss() }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.close),
-                            contentDescription = null,
-                            tint = Color.White
-                        )
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState) { snackbarData ->
+                Snackbar(
+                    modifier = Modifier.padding(16.dp),
+                    containerColor = MainColor,
+                    contentColor = Color.White,
+                    action = {
+                        IconButton(onClick = { snackbarData.dismiss() }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.close),
+                                contentDescription = null,
+                                tint = Color.White
+                            )
+                        }
                     }
+                ) {
+                    Text(snackbarData.visuals.message, color = Color.White)
                 }
-            ) {
-                Text(snackbarData.visuals.message, color = Color.White)
             }
-        } }
+        }
     ) { paddingValues ->
         Column(
-            verticalArrangement = Arrangement.SpaceEvenly,
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
@@ -128,32 +117,50 @@ fun DetailPage(food: Food) {
                 painter = painterResource(id = getDrawableResId(food.image)),
                 contentDescription = "",
                 modifier = Modifier
-                    .size(200.dp)
-                    .clip(CircleShape)
+                    .fillMaxWidth()
+                    .padding(10.dp)
             )
-            Text(text = "${food.price} ₺", fontSize = 30.sp, color = Color.Black)
-            Button(
-                modifier = Modifier.size(220.dp, 60.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MainColor,
-                    contentColor = Color.White
-                ),
-                onClick = {
-                    CoroutineScope(Dispatchers.Main).launch {
+            Text(text = "${food.price} ₺", fontSize = 30.sp, color = Color.Black, modifier = Modifier.padding(10.dp))
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Icon(painterResource(id = R.drawable.restaurant), contentDescription = null)
+                Text(
+                    text = "${selectedFoodOrderCount.intValue} kez sipariş edildi",
+                    fontSize = 20.sp,
+                    color = Color.Black
+                )
+            }
+            Column(
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Button(
+                    modifier = Modifier.size(220.dp, 60.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MainColor,
+                        contentColor = Color.White
+                    ),
+                    onClick = {
+                        CoroutineScope(Dispatchers.Main).launch {
 
-                        foodOrderCountMap[food.id]?.let { orderCount ->
-                            handleClick(food.id, orderCount, datastore)
-                            selectedFoodOrderCount.intValue = orderCount.intValue
+                            foodOrderCountMap[food.id]?.let { orderCount ->
+                                handleClick(food.id, orderCount, datastore)
+                                selectedFoodOrderCount.intValue = orderCount.intValue
+                            }
+
+                            snackbarHostState.showSnackbar(
+                                message = "${food.name} siparişiniz alındı",
+                                actionLabel = null, //you can use this if you just want to show string action instead of icon (and delete action method of snackbarHost)
+                                duration = SnackbarDuration.Short
+                            )
                         }
-
-                        snackbarHostState.showSnackbar(
-                            message = "${food.name} siparişiniz alındı",
-                            actionLabel = null, //you can use this if you just want to show string action instead of icon (and delete action method of snackbarHost)
-                            duration = SnackbarDuration.Short
-                        )
-                    }
-            }) {
-                Text(text = "Sipariş Ver", fontSize = 20.sp, color = Color.White)
+                    }) {
+                    Text(text = "Sipariş Ver", fontSize = 20.sp, color = Color.White)
+                }
+                Box(Modifier.size(20.dp))
             }
         }
     }
