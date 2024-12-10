@@ -49,7 +49,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailPage(food: Food) {
+fun DetailPage(food: Food, foodListSize: Int) {
 
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
@@ -60,7 +60,7 @@ fun DetailPage(food: Food) {
 
     LaunchedEffect(key1 = true) {
         CoroutineScope(Dispatchers.Main).launch {
-            for (foodId in 1..9) {
+            for (foodId in 1..foodListSize) {
                 foodOrderCountMap[foodId] = mutableIntStateOf(datastore.readOrderCount(foodId))
             }
             selectedFoodOrderCount.intValue = datastore.readOrderCount(food.id)

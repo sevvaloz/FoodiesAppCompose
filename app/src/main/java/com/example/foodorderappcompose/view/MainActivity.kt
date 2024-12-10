@@ -41,12 +41,16 @@ fun Navigator() {
             HomePage(navController = navController)
         }
         composable(
-            "detailPage/{FOOD}",
-            arguments = listOf(navArgument("FOOD") { type = NavType.StringType})
+            "detailPage/{FOOD}/{FOOD_LIST_SIZE}",
+            arguments = listOf(
+                navArgument("FOOD") { type = NavType.StringType},
+                navArgument("FOOD_LIST_SIZE") { type = NavType.IntType}
+            )
         ) {
             val json = it.arguments?.getString("FOOD")
             val food = Gson().fromJson(json, Food::class.java)
-            DetailPage(food)
+            val foodListSize = it.arguments?.getInt("FOOD_LIST_SIZE")!!
+            DetailPage(food, foodListSize)
         }
     }
 }

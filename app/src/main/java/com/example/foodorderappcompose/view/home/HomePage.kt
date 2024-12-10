@@ -105,7 +105,7 @@ fun HomePage(navController: NavController) {
                         Row(
                             modifier = Modifier.clickable{
                                 val json = Gson().toJson(food)
-                                navController.navigate("detailPage/$json")
+                                navController.navigate("detailPage/$json/${foodList.value.size}")
                             }
                         ) {
                             Row(
