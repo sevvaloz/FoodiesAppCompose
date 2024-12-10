@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -57,6 +58,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.navigation:navigation-compose:2.8.4")
+    implementation("com.google.firebase:firebase-database:21.0.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
@@ -79,4 +81,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
     api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+
+    //glide
+    implementation("com.github.skydoves:landscapist-glide:1.4.4")
 }

@@ -1,8 +1,8 @@
 package com.example.foodorderappcompose.data
 
 data class Food(
-    var id: Int,
-    var name: String,
-    var image: String,
-    var price: Float
+    var id: Int? = 0,
+    var name: String? = "",
+    var image: String? = "",
+    var price: Float? = 0.0f
 )

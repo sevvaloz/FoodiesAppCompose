@@ -49,8 +49,8 @@ fun Navigator() {
         ) {
             val json = it.arguments?.getString("FOOD")
             val food = Gson().fromJson(json, Food::class.java)
-            val foodListSize = it.arguments?.getInt("FOOD_LIST_SIZE")!!
-            DetailPage(food, foodListSize)
+            val foodListSize = it.arguments?.getInt("FOOD_LIST_SIZE") ?: 0
+            DetailPage(food = food, foodListSize = foodListSize)
         }
     }
 }

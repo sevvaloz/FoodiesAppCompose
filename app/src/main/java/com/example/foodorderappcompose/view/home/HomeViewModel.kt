@@ -15,7 +15,9 @@ class HomeViewModel: ViewModel() {
         get() = _foodList
 
     init {
+        foodRepo.foodListRepo.observeForever { newFoodList ->
+            _foodList.value = newFoodList
+        }
         foodRepo.createFoodList()
-        _foodList.value = foodRepo.foodListRepo.value
     }
 }

@@ -1,6 +1,5 @@
 package com.example.foodorderappcompose.view.detail
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,25 +30,23 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.foodorderappcompose.R
 import com.example.foodorderappcompose.data.Food
 import com.example.foodorderappcompose.datastore.AppDatastore
 import com.example.foodorderappcompose.ui.theme.MainColor
-import com.example.foodorderappcompose.view.home.getDrawableResId
+import com.skydoves.landscapist.glide.GlideImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailPage(food: Food, foodListSize: Int) {
+fun DetailPage(food: Food?, foodListSize: Int) {
 
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
@@ -63,7 +60,11 @@ fun DetailPage(food: Food, foodListSize: Int) {
             for (foodId in 1..foodListSize) {
                 foodOrderCountMap[foodId] = mutableIntStateOf(datastore.readOrderCount(foodId))
             }
-            selectedFoodOrderCount.intValue = datastore.readOrderCount(food.id)
+            food?.id?.let { foodId ->
+                datastore.readOrderCount(foodId)
+            }?.also { foodOrderCount ->
+                selectedFoodOrderCount.intValue = foodOrderCount
+            }
         }
     }
 
@@ -75,7 +76,7 @@ fun DetailPage(food: Food, foodListSize: Int) {
                         modifier = Modifier.fillMaxWidth(),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(text = food.name, fontSize = 25.sp, color = Color.White)
+                        Text(text = food?.name.toString(), fontSize = 25.sp, color = Color.White)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -113,14 +114,18 @@ fun DetailPage(food: Food, foodListSize: Int) {
                 .background(color = Color.White)
                 .padding(paddingValues)
         ) {
-            Image(
-                painter = painterResource(id = getDrawableResId(food.image)),
-                contentDescription = "",
+            GlideImage(
+                imageModel = food?.image,
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .size(250.dp)
                     .padding(10.dp)
             )
-            Text(text = "${food.price} ₺", fontSize = 30.sp, color = Color.Black, modifier = Modifier.padding(10.dp))
+            Text(
+                text = "${food?.price} ₺",
+                fontSize = 30.sp,
+                color = Color.Black,
+                modifier = Modifier.padding(10.dp)
+            )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
@@ -146,13 +151,15 @@ fun DetailPage(food: Food, foodListSize: Int) {
                     onClick = {
                         CoroutineScope(Dispatchers.Main).launch {
 
-                            foodOrderCountMap[food.id]?.let { orderCount ->
-                                handleClick(food.id, orderCount, datastore)
+                            foodOrderCountMap[food?.id]?.let { orderCount ->
+                                food?.id?.let { food ->
+                                    handleClick(food, orderCount, datastore)
+                                }
                                 selectedFoodOrderCount.intValue = orderCount.intValue
                             }
 
                             snackbarHostState.showSnackbar(
-                                message = "${food.name} siparişiniz alındı",
+                                message = "${food?.name} siparişiniz alındı",
                                 actionLabel = null, //you can use this if you just want to show string action instead of icon (and delete action method of snackbarHost)
                                 duration = SnackbarDuration.Short
                             )

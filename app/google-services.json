@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "722908144655",
+    "project_id": "foodorderappcompose",
+    "storage_bucket": "foodorderappcompose.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:722908144655:android:5fc793a9f29cae31bf2f7a",
+        "android_client_info": {
+          "package_name": "com.example.foodorderappcompose"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9YPgs4-TK8HZ-f6g7BbcOFqS_MrEMRGM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
