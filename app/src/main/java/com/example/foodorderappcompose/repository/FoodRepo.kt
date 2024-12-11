@@ -25,13 +25,10 @@ class FoodRepo {
 
                 val foodList =  ArrayList<Food>()
 
-                snapshot.children.forEach { dataSnapshot ->
-                    val food = dataSnapshot.getValue(Food::class.java)
-                    food?.let { _food ->
-                        Log.d("TAG", dataSnapshot.key.toString())
-                        food.id = _food.id
-                        foodList.add(food)
-                    }
+                //children: all objects under the reference point (the reference point in this case is 'foods'), child: each object in 'children'
+                for(child in snapshot.children) {
+                    val food = child.getValue(Food::class.java)
+                    food?.let { foodList.add(it) }
                 }
 
                 _foodListRepo.value = foodList

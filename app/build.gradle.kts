@@ -77,9 +77,11 @@ dependencies {
     //preferences
     implementation("androidx.datastore:datastore-preferences:1.1.1")
 
-    //lifecycle - coroutines
+    //lifecycle
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
-    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+
+    //coroutines
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
     api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
 
     //glide

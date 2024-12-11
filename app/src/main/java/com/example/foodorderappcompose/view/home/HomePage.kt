@@ -36,16 +36,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.foodorderappcompose.R
-import com.example.foodorderappcompose.data.Food
-import com.example.foodorderappcompose.ui.theme.CardView1
-import com.example.foodorderappcompose.ui.theme.CardView2
-import com.example.foodorderappcompose.ui.theme.CardView3
-import com.example.foodorderappcompose.ui.theme.CardView4
-import com.example.foodorderappcompose.ui.theme.CardView5
-import com.example.foodorderappcompose.ui.theme.CardView6
-import com.example.foodorderappcompose.ui.theme.CardView7
-import com.example.foodorderappcompose.ui.theme.CardView8
-import com.example.foodorderappcompose.ui.theme.CardView9
+import com.example.foodorderappcompose.ui.theme.CardColor
 import com.example.foodorderappcompose.ui.theme.MainColor
 import com.google.gson.Gson
 import com.skydoves.landscapist.glide.GlideImage
@@ -56,17 +47,6 @@ fun HomePage(navController: NavController) {
 
     val homeViewModel: HomeViewModel = viewModel()
     val foodList = homeViewModel.foodList.observeAsState(listOf())
-    val colorList = listOf(
-        CardView1,
-        CardView2,
-        CardView3,
-        CardView4,
-        CardView5,
-        CardView6,
-        CardView7,
-        CardView8,
-        CardView9
-    )
 
     Scaffold(
         topBar = {
@@ -96,7 +76,7 @@ fun HomePage(navController: NavController) {
                 val currentFoodList = foodList.value
                 if (currentFoodList.isNotEmpty()) {
                     itemsIndexed(currentFoodList) { index, food ->
-                        val cardColor = colorList.getOrNull(index % colorList.size) ?: Color.Gray
+                        val cardColor =  CardColor
                         ElevatedCard(
                             elevation = CardDefaults.cardElevation(
                                 defaultElevation = 3.dp
