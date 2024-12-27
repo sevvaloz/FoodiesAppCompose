@@ -117,8 +117,9 @@ fun DetailPage(food: Food?, foodListSize: Int) {
             GlideImage(
                 imageModel = food?.image,
                 modifier = Modifier
-                    .size(250.dp)
-                    .padding(10.dp)
+                    .fillMaxWidth()
+                    .size(0.dp, 400.dp)
+                    .padding(bottom = 10.dp)
             )
             Text(
                 text = "${food?.price} ₺",

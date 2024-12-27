@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.foodorderappcompose"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -86,4 +86,7 @@ dependencies {
 
     //glide
     implementation("com.github.skydoves:landscapist-glide:1.4.4")
+
+    //work manager
+    implementation("androidx.work:work-runtime-ktx:2.10.0")
 }
