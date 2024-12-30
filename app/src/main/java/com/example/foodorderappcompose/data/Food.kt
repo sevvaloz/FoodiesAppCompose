@@ -4,5 +4,6 @@ data class Food(
     var id: Int? = 0,
     var name: String? = "",
     var image: String? = "",
-    var price: Float? = 0.0f
+    var price: Float? = 0.0f,
+    var description: String? = ""
 )

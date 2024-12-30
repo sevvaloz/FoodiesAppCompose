@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
 }
 
 private fun setupPeriodicNotification(context: Context) {
-    val periodicWorkRequest = PeriodicWorkRequestBuilder<NotificationWorker>(15, TimeUnit.MINUTES)
+    val periodicWorkRequest = PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS)
         .setInitialDelay(15, TimeUnit.MINUTES)
         .build()
 
@@ -104,7 +104,7 @@ fun Navigator() {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun Preview() {
     FoodOrderAppComposeTheme {
         Navigator()
     }
