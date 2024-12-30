@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Foodie\'s</string>
+
+    <string name="daily_notification_title">Leziz bir hatırlatma</string>
+    <string name="daily_notification_message">Acıktıysan damak tadına uyan bir lezzet sipariş etmenin tam sırası!</string>
+    <string name="daily_notification_channed_id">dailyNotificationsId</string>
+    <string name="daily_notification_channed_name">Daily Notifications</string>
+
 </resources>

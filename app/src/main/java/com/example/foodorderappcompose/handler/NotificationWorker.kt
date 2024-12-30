@@ -10,10 +10,14 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.foodorderappcompose.R
 
-class NotificationWorker(context: Context, workerParameters: WorkerParameters): Worker(context, workerParameters) {
+class NotificationWorker(context: Context, workerParameters: WorkerParameters) :
+    Worker(context, workerParameters) {
     override fun doWork(): Result {
         return try {
-            showNotification("Delicious Reminder", "It is time to order if you are hungry!")
+            showNotification(
+                applicationContext.getString(R.string.daily_notification_title),
+                applicationContext.getString(R.string.daily_notification_message)
+            )
             Log.d("NotificationWorker", "Notification succeed")
             Result.success()
         } catch (e: Exception) {
@@ -23,8 +27,8 @@ class NotificationWorker(context: Context, workerParameters: WorkerParameters): 
     }
 
     private fun showNotification(title: String, message: String) {
-        val channelId = "dailyNotificationsId"
-        val channelName = "Daily Notifications"
+        val channelId = applicationContext.getString(R.string.daily_notification_channed_id)
+        val channelName = applicationContext.getString(R.string.daily_notification_channed_name)
         val notificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
 
