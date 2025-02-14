@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
 }
 
 private fun setupPeriodicNotification(context: Context) {
-    val periodicWorkRequest = PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS)
+    val periodicWorkRequest = PeriodicWorkRequestBuilder<NotificationWorker>(10, TimeUnit.DAYS)
         .setInitialDelay(15, TimeUnit.MINUTES)
         .build()
 

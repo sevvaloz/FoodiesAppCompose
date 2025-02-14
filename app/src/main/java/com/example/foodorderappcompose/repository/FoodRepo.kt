@@ -1,6 +1,5 @@
 package com.example.foodorderappcompose.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.foodorderappcompose.data.Food
