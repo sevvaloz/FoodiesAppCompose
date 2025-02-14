@@ -1,9 +1,12 @@
 package com.example.foodorderappcompose.view.home
 
 import android.net.Uri
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -85,7 +88,7 @@ fun HomePage(navController: NavController) {
                 val currentFoodList = foodList.value
                 if (currentFoodList.isNotEmpty()) {
                     itemsIndexed(currentFoodList) { index, food ->
-                        var expanded = remember { mutableStateOf(false) }
+                        val expanded = remember { mutableStateOf(false) }
                         ElevatedCard(
                             elevation = CardDefaults.cardElevation(
                                 defaultElevation = 3.dp
@@ -152,6 +155,7 @@ fun HomePage(navController: NavController) {
                                             }
                                         ) {
                                             Icon(
+                                                tint = Color.Black,
                                                 imageVector = if (expanded.value) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
                                                 contentDescription = null
                                             )
@@ -159,7 +163,11 @@ fun HomePage(navController: NavController) {
                                     }
                                 }
                             }
-                            if (expanded.value) {
+                            AnimatedVisibility(
+                                visible = expanded.value,
+                                enter = expandVertically(),
+                                exit = shrinkVertically()
+                            ) {
                                 Column(
                                     modifier = Modifier.padding(
                                         start = dimensionResource(R.dimen.padding_medium),
@@ -169,7 +177,9 @@ fun HomePage(navController: NavController) {
                                     )
                                 ) {
                                     Text(
-                                        text = food.description.toString()
+                                        text = food.description.toString(),
+                                        fontSize = 15.sp,
+                                        color = Color.Black
                                     )
                                 }
                             }

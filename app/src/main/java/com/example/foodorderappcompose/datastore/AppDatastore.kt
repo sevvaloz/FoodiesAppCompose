@@ -36,12 +36,10 @@ class AppDatastore(private var context: Context) {
         return preferences[intPreferencesKey("food_$foodId")] ?: 0
     }
 
-    /*
-    suspend fun deleteOrderCount() {
-        context.ds.edit {
-            it.remove("food_$foodId")
+
+    suspend fun deleteOrderCount(foodId: Int) {
+        context.dataStore.edit {
+            it.remove(intPreferencesKey("food_$foodId"))
         }
     }
-     */
-
 }

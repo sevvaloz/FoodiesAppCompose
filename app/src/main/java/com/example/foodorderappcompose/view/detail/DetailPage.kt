@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -53,7 +55,6 @@ fun DetailPage(food: Food?, foodListSize: Int) {
     val datastore = AppDatastore.getInstance(context)
     val foodOrderCountMap = remember { mutableStateMapOf<Int, MutableIntState>() }
     val selectedFoodOrderCount = remember { mutableIntStateOf(0) }
-
 
     LaunchedEffect(key1 = true) {
         CoroutineScope(Dispatchers.Main).launch {
@@ -113,6 +114,7 @@ fun DetailPage(food: Food?, foodListSize: Int) {
                 .fillMaxSize()
                 .background(color = Color.White)
                 .padding(paddingValues)
+                .verticalScroll(rememberScrollState()) //it helps to scroll down when the screen rotate to landscape
         ) {
             GlideImage(
                 imageModel = food?.image,
@@ -151,7 +153,6 @@ fun DetailPage(food: Food?, foodListSize: Int) {
                     ),
                     onClick = {
                         CoroutineScope(Dispatchers.Main).launch {
-
                             foodOrderCountMap[food?.id]?.let { orderCount ->
                                 food?.id?.let { food ->
                                     handleClick(food, orderCount, datastore)
