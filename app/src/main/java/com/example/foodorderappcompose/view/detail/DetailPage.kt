@@ -133,7 +133,7 @@ fun DetailPage(food: Food?, foodListSize: Int) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Icon(painterResource(id = R.drawable.restaurant), contentDescription = null)
+                Icon(painterResource(id = R.drawable.restaurant), tint = Color.Black, contentDescription = null)
                 Text(
                     text = "${selectedFoodOrderCount.intValue} kez sipariş edildi",
                     fontSize = 20.sp,
