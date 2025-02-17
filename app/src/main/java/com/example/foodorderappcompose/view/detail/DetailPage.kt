@@ -1,5 +1,8 @@
 package com.example.foodorderappcompose.view.detail
 
+
+import androidx.compose.animation.core.animateSizeAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,11 +30,15 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableIntState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -44,6 +51,7 @@ import com.example.foodorderappcompose.ui.theme.MainColor
 import com.skydoves.landscapist.glide.GlideImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,6 +63,11 @@ fun DetailPage(food: Food?, foodListSize: Int) {
     val datastore = AppDatastore.getInstance(context)
     val foodOrderCountMap = remember { mutableStateMapOf<Int, MutableIntState>() }
     val selectedFoodOrderCount = remember { mutableIntStateOf(0) }
+    var toggled by remember { mutableStateOf(false) }
+    val animatedSize by animateSizeAsState(
+        targetValue = if (toggled) Size(200f, 50f) else Size(220f, 60f),
+        animationSpec = tween(durationMillis = 100)
+    )
 
     LaunchedEffect(key1 = true) {
         CoroutineScope(Dispatchers.Main).launch {
@@ -146,13 +159,19 @@ fun DetailPage(food: Food?, foodListSize: Int) {
                 modifier = Modifier.fillMaxSize()
             ) {
                 Button(
-                    modifier = Modifier.size(220.dp, 60.dp),
+                    modifier = Modifier.size(animatedSize.width.dp, animatedSize.height.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MainColor,
                         contentColor = Color.White
                     ),
                     onClick = {
+                        toggled = !toggled
+
                         CoroutineScope(Dispatchers.Main).launch {
+
+                            delay(100)
+                            toggled = !toggled
+
                             foodOrderCountMap[food?.id]?.let { orderCount ->
                                 food?.id?.let { food ->
                                     handleClick(food, orderCount, datastore)
