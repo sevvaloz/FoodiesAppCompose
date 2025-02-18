@@ -21,6 +21,9 @@
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.FoodOrderAppCompose">
+            <meta-data
+                android:name="android:force_dark_allow"
+                android:value="true" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

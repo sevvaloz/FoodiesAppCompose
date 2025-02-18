@@ -1,9 +1,7 @@
 package com.example.foodorderappcompose.view.detail
 
-
 import androidx.compose.animation.core.animateSizeAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,12 +11,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarDuration
@@ -38,8 +38,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -90,12 +90,11 @@ fun DetailPage(food: Food?, foodListSize: Int) {
                         modifier = Modifier.fillMaxWidth(),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(text = food?.name.toString(), fontSize = 25.sp, color = Color.White)
+                        Text(text = food?.name.toString(), fontSize = 25.sp, color = MaterialTheme.colorScheme.onPrimary)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MainColor,
-                    titleContentColor = Color.White
+                    containerColor = MainColor
                 )
             )
         },
@@ -104,28 +103,26 @@ fun DetailPage(food: Food?, foodListSize: Int) {
                 Snackbar(
                     modifier = Modifier.padding(16.dp),
                     containerColor = MainColor,
-                    contentColor = Color.White,
                     action = {
                         IconButton(onClick = { snackbarData.dismiss() }) {
                             Icon(
                                 painter = painterResource(id = R.drawable.close),
                                 contentDescription = null,
-                                tint = Color.White
+                                tint = MaterialTheme.colorScheme.onPrimary
                             )
                         }
                     }
                 ) {
-                    Text(snackbarData.visuals.message, color = Color.White)
+                    Text(snackbarData.visuals.message, color = MaterialTheme.colorScheme.onPrimary)
                 }
             }
         }
     ) { paddingValues ->
         Column(
-            verticalArrangement = Arrangement.Top,
+            verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = Color.White)
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState()) //it helps to scroll down when the screen rotate to landscape
         ) {
@@ -134,23 +131,24 @@ fun DetailPage(food: Food?, foodListSize: Int) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .size(0.dp, 400.dp)
-                    .padding(bottom = 10.dp)
+                    .padding(horizontal = 20.dp)
+                    .clip(RoundedCornerShape(16.dp))
             )
             Text(
                 text = "${food?.price} ₺",
                 fontSize = 30.sp,
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.onSecondary,
                 modifier = Modifier.padding(10.dp)
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Icon(painterResource(id = R.drawable.restaurant), tint = Color.Black, contentDescription = null)
+                Icon(painterResource(id = R.drawable.restaurant), tint = MaterialTheme.colorScheme.onSecondary, contentDescription = null)
                 Text(
                     text = "${selectedFoodOrderCount.intValue} kez sipariş edildi",
                     fontSize = 20.sp,
-                    color = Color.Black
+                    color = MaterialTheme.colorScheme.onSecondary
                 )
             }
             Column(
@@ -161,8 +159,7 @@ fun DetailPage(food: Food?, foodListSize: Int) {
                 Button(
                     modifier = Modifier.size(animatedSize.width.dp, animatedSize.height.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MainColor,
-                        contentColor = Color.White
+                        containerColor = MainColor
                     ),
                     onClick = {
                         toggled = !toggled
@@ -186,9 +183,8 @@ fun DetailPage(food: Food?, foodListSize: Int) {
                             )
                         }
                     }) {
-                    Text(text = "Sipariş Ver", fontSize = 20.sp, color = Color.White)
+                    Text(text = "Sipariş Ver", fontSize = 20.sp, color = MaterialTheme.colorScheme.onPrimary)
                 }
-                Box(Modifier.size(20.dp))
             }
         }
     }

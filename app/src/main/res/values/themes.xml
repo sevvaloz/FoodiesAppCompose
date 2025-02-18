@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <!-- Light/Day theme -->
     <style name="Theme.FoodOrderAppCompose" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <!-- Dark/Night theme -->
+    <style name="Theme.FoodOrderAppCompose.Dark" parent="android:Theme.Material.NoActionBar" />
 </resources>

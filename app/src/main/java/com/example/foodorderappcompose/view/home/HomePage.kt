@@ -7,7 +7,6 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,6 +29,7 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -41,14 +41,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.foodorderappcompose.R
-import com.example.foodorderappcompose.ui.theme.CardColor
 import com.example.foodorderappcompose.ui.theme.MainColor
 import com.google.gson.Gson
 import com.skydoves.landscapist.glide.GlideImage
@@ -68,12 +66,11 @@ fun HomePage(navController: NavController) {
                         modifier = Modifier.fillMaxWidth(),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(text = "Foodie's")
+                        Text(text = "Foodie's", fontSize = 25.sp, color = MaterialTheme.colorScheme.onPrimary)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MainColor,
-                    titleContentColor = Color.White
+                    containerColor = MainColor
                 )
             )
         }
@@ -81,7 +78,6 @@ fun HomePage(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = Color.White)
                 .padding(paddingValues)
         ) {
             LazyColumn {
@@ -94,12 +90,11 @@ fun HomePage(navController: NavController) {
                                 defaultElevation = 3.dp
                             ),
                             colors = CardDefaults.cardColors(
-                                containerColor = CardColor,
+                                containerColor = MainColor,
                             ),
                             modifier = Modifier
                                 .padding(all = 5.dp)
                                 .fillMaxWidth()
-                                .background(color = Color.White)
                                 .animateContentSize(
                                     animationSpec = spring(
                                         dampingRatio = Spring.DampingRatioNoBouncy,
@@ -140,13 +135,13 @@ fun HomePage(navController: NavController) {
                                             Text(
                                                 text = food.name.toString(),
                                                 fontSize = 20.sp,
-                                                color = Color.Black
+                                                color = MaterialTheme.colorScheme.onPrimary
                                             )
                                             Spacer(modifier = Modifier.size(20.dp))
                                             Text(
                                                 text = "${food.price} ₺",
                                                 fontSize = 20.sp,
-                                                color = Color.Black
+                                                color = MaterialTheme.colorScheme.onPrimary
                                             )
                                         }
                                         IconButton(
@@ -155,7 +150,7 @@ fun HomePage(navController: NavController) {
                                             }
                                         ) {
                                             Icon(
-                                                tint = Color.Black,
+                                                tint = MaterialTheme.colorScheme.onPrimary,
                                                 imageVector = if (expanded.value) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
                                                 contentDescription = null
                                             )
@@ -179,7 +174,7 @@ fun HomePage(navController: NavController) {
                                     Text(
                                         text = food.description.toString(),
                                         fontSize = 15.sp,
-                                        color = Color.Black
+                                        color = MaterialTheme.colorScheme.onPrimary
                                     )
                                 }
                             }
