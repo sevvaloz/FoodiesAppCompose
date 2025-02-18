@@ -1,5 +1,7 @@
 package com.example.foodorderappcompose.view.detail
 
+import android.app.Activity
+import android.content.pm.ActivityInfo
 import androidx.compose.animation.core.animateSizeAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
@@ -10,9 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.getValue
@@ -60,6 +61,7 @@ fun DetailPage(food: Food?, foodListSize: Int) {
 
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
+    val activity = context as? Activity
     val datastore = AppDatastore.getInstance(context)
     val foodOrderCountMap = remember { mutableStateMapOf<Int, MutableIntState>() }
     val selectedFoodOrderCount = remember { mutableIntStateOf(0) }
@@ -79,6 +81,13 @@ fun DetailPage(food: Food?, foodListSize: Int) {
             }?.also { foodOrderCount ->
                 selectedFoodOrderCount.intValue = foodOrderCount
             }
+        }
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT //locked screen orientationto avoid turning into landscape
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED //unlocked
         }
     }
 
@@ -124,14 +133,13 @@ fun DetailPage(food: Food?, foodListSize: Int) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .verticalScroll(rememberScrollState()) //it helps to scroll down when the screen rotate to landscape
+                .padding(16.dp)
         ) {
             GlideImage(
                 imageModel = food?.image,
                 modifier = Modifier
                     .fillMaxWidth()
                     .size(0.dp, 400.dp)
-                    .padding(horizontal = 20.dp)
                     .clip(RoundedCornerShape(16.dp))
             )
             Text(
